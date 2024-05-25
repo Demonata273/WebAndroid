@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="./../assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="./../assets/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="./../assets/css/style.css">
+  <link rel="shortcut icon" href="./../assets/images/favicon.png" />
+</head>
+<style>
+  #loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 9999;
+  }
+
+  #loading-spinner {
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -30px 0 0 -30px;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  #loading-text {
+    position: absolute;
+    top: calc(50% + 60px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+</style>
+<body>
+  <div id="loading-overlay">
+    <div id="loading-spinner"></div>
+    <div id="loading-text">Loading...</div>
+  </div>
+  <div class="container-scroller">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar" style="top: 30px;">
+
+      <ul class="nav" style="padding-top: 30px;">
+        <li class="nav-item profile">
+          <div class="profile-desc">
+            <div class="profile-pic">
+              <div class="count-indicator">
+                <img class="img-xs rounded-circle " src="./../assets/images/faces/face15.jpg" alt="">
+                <span class="count bg-success"></span>
+              </div>
+              <div class="profile-name">
+                <h5 id="usernameDisplay" class="mb-0 font-weight-normal"></h5>
+                <span id="roleDisplay"></span>
+              </div>
+            </div>
+            <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+            <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list"
+              aria-labelledby="profile-dropdown">
+              <a href="./samples/login.html" class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-settings text-primary"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <p class="preview-subject ellipsis mb-1 text-small">LogOut</p>
+                </div>
+              </a>
+
+            </div>
+          </div>
+        </li>
+        <li class="nav-item nav-category">
+          <span class="nav-link">Danh Mục</span>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="../index.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-speedometer"></i>
+            </span>
+            <span class="menu-title">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="./movie.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-video"></i>
+            </span>
+            <span class="menu-title">Movies</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="./account.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-account-plus"></i>
+            </span>
+            <span class="menu-title">Account</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="./employees.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-account-card-details"></i>
+            </span>
+            <span class="menu-title">Employees</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="./notication.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-account-card-details"></i>
+            </span>
+            <span class="menu-title">Notication</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_navbar.html -->
+      <nav class="navbar p-0 fixed-top d-flex flex-row">
+
+        <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch" style="height: 30px;">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <ul class="navbar-nav w-100">
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+            data-toggle="offcanvas">
+            <span class="mdi mdi-format-line-spacing"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel" style="padding-top: 30px;">
+        <div class="content-wrapper">
+          <div class="page-header">
+            <nav aria-label="breadcrumb">
+            </nav>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="card-title">Users Account</h4>
+                    <button class="btn btn-primary btn-icon-text" onclick="openAddModal()"><i
+                        class="mdi mdi-account-plus"></i>Add</button>
+                  </div>
+                  </p>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th> User_Id </th>
+                          <th> Username </th>
+                          <th> Email </th>
+                          <th> Password </th>
+                          <th> </th>
+                        </tr>
+                      </thead>
+                      <tbody id="userDataBody">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal -->
+          <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="userInfoModalLabel">Thông tin người dùng</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body" id="userInfoModalBody">
+                  <form id="userInfoForm">
+                    <p><strong>User ID: <span id="userId" class="text-success"></span></strong></p>
+                    <div class="form-group">
+                      <label for="username">Username:</label>
+                      <input type="text" class="form-control" id="username" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email:</label>
+                      <input type="email" class="form-control" id="email" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Password:</label>
+                      <input type="password" class="form-control" id="password" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="sms">SMS:</label>
+                      <input type="text" class="form-control" id="sms" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="googleId">Google ID:</label>
+                      <input type="text" class="form-control" id="googleId" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="facebookId">Facebook ID:</label>
+                      <input type="text" class="form-control" id="facebookId" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="avatar">Avatar:</label>
+                      <input type="text" class="form-control" id="avatar" value="">
+                    </div>
+                    <div class="form-group row userTypeRadioGroup">
+                      <label class="col-sm-3 col-form-label">Role</label>
+                      <div class="col-sm-3">
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="role" value="2"> User </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="role" value="1"> Moderer </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="role" value="0"> Admin </label>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" onclick="saveUserInfo()" id="saveButton">Lưu</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block"></span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Admin Movies App nhóm 12 </span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <script>
+    let userData = null;
+    document.addEventListener('DOMContentLoaded', function () {
+      showLoading()
+      fetch('https://script.google.com/macros/s/AKfycbwb6OpcqdD1yJifVIZMeR5x2Ae1R5Ak-V04ASpXUNnkF1IjzbClCW8ZAdC0hoCE6QRp/exec')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          hideLoading()
+          // Lưu trữ dữ liệu người dùng vào biến toàn cục
+          userData = data.users;
+
+          // Clear previous data
+          const userDataBody = document.getElementById('userDataBody');
+          userDataBody.innerHTML = '';
+
+          // Loop through the received data and create table rows
+          Object.values(userData).forEach(user => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                          <td>${user[0]}</td>
+                          <td>${user[1]}</td>
+                          <td>${user[2]}</td>
+                          <td>${user[3]}</td>
+                          <td>
+                            <button class="btn btn-inverse-primary btn-icon" onclick="showUserInfo('${user[0]}')">
+                              <i class="mdi mdi-information"></i>
+                            </button>
+                            <button class="btn btn-inverse-danger btn-icon" onclick="deleteUser('${user[0]}')">
+                              <i class="mdi mdi-close-octagon-outline"></i>
+                            </button>
+                          </td>
+                      `;
+            userDataBody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    });
+
+    function deleteUser(userId) {
+      showLoading()
+      var formData = new FormData();
+      formData.append('functionname', 'deleteUser');
+      formData.append('userId', userId);
+      fetch(`https://script.google.com/macros/s/AKfycbwb6OpcqdD1yJifVIZMeR5x2Ae1R5Ak-V04ASpXUNnkF1IjzbClCW8ZAdC0hoCE6QRp/exec`, {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => {
+          hideLoading()
+          if (!response.ok) {
+            throw new Error('Failed to delete user');
+          }
+          return response.json();
+        })
+        .then(data => {
+          hideLoading()
+          // Reload the table after deletion
+          location.reload();
+        })
+        .catch(error => {
+          hideLoading()
+          console.error('Error deleting user:', error);
+        });
+    }
+    function saveUserInfo() {
+      showLoading()
+      // Lấy thông tin người dùng từ các trường input
+      const userId = document.getElementById('userId').textContent;
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const sms = document.getElementById('sms').value;
+      const googleId = document.getElementById('googleId').value;
+      const facebookId = document.getElementById('facebookId').value;
+      const avatar = document.getElementById('avatar').value;
+      const roleInput = document.querySelector('input[name="role"]:checked');
+      const role = roleInput ? roleInput.value : null;
+
+
+      // Cập nhật thông tin người dùng trong biến toàn cục userData
+      const userIndex = userData.findIndex(u => u[0] === userId);
+      if (role == null) {
+        if (userIndex !== -1) {
+          userData[userIndex] = [userId, username, email, password, sms, googleId, facebookId, avatar];
+        }
+      } else {
+        if (userIndex !== -1) {
+          userData[userIndex] = [userId, username, email, password, sms, googleId, facebookId, avatar, role];
+        }
+      }
+      // Tạo formData chứa dữ liệu người dùng
+      var formData = new FormData();
+      formData.append('functionname', 'updateUser');
+      formData.append('userId', userId);
+      formData.append('username', username);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('sms', sms);
+      formData.append('googleId', googleId);
+      formData.append('facebookId', facebookId);
+      formData.append('avatar', avatar);
+      formData.append('role', role);
+      // Gửi dữ liệu lên ứng dụng script thông qua fetch
+      fetch('https://script.google.com/macros/s/AKfycbwb6OpcqdD1yJifVIZMeR5x2Ae1R5Ak-V04ASpXUNnkF1IjzbClCW8ZAdC0hoCE6QRp/exec', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => {
+          hideLoading()
+          if (!response.ok) {
+            throw new Error('Failed to update user');
+          }
+          return response.json();
+        })
+        .then(data => {
+          hideLoading()
+          // Thực hiện các hành động cần thiết sau khi cập nhật thành công (nếu có)
+          // Ví dụ: reload dữ liệu người dùng
+          location.reload();
+        })
+        .catch(error => {
+          hideLoading()
+          console.error('Error updating user:', error);
+        });
+
+      // Đóng modal
+      $('#userInfoModal').modal('hide');
+    }
+
+
+    function showUserInfo(userId) {
+      document.getElementById('userInfoModalLabel').textContent = 'Thông tin người dùng';
+      document.getElementById('saveButton').textContent = 'Lưu';
+      // Lấy thông tin người dùng từ biến toàn cục userData
+      const user = userData.find(u => u[0] === userId);
+
+      // Điền thông tin người dùng vào các trường input
+      document.getElementById('userId').textContent = user[0];
+      document.getElementById('username').value = user[1];
+      document.getElementById('email').value = user[2];
+      document.getElementById('password').value = user[3];
+      document.getElementById('sms').value = user[4];
+      document.getElementById('googleId').value = user[5];
+      document.getElementById('facebookId').value = user[6];
+      document.getElementById('avatar').value = user[7];
+      // Hiển thị modal
+      $('#userInfoModal').modal('show');
+      $('.userTypeRadioGroup').addClass('d-none');
+    }
+
+    function openAddModal() {
+      document.getElementById('userInfoModalLabel').textContent = 'Thêm người dùng mới';
+      document.getElementById('saveButton').textContent = 'Thêm';
+      // Xóa trước các giá trị cũ trong modal
+      document.getElementById('userId').textContent = '';
+      document.getElementById('username').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('sms').value = '';
+      document.getElementById('googleId').value = '';
+      document.getElementById('facebookId').value = '';
+      document.getElementById('avatar').value = '';
+      // Hiển thị modal
+      $('#userInfoModal').modal('show');
+      $('.userTypeRadioGroup').removeClass('d-none');
+    }
+
+
+  </script>
+  <script src="./../assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="./../assets/js/off-canvas.js"></script>
+  <script src="./../assets/js/hoverable-collapse.js"></script>
+  <script src="./../assets/js/misc.js"></script>
+  <script src="./../assets/js/settings.js"></script>
+  <script src="./../assets/js/todolist.js"></script>
+  <script src="./../assets/js/loading.js"></script>
+</body>
+
+</html>

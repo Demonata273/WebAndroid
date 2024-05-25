@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+  <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="../../assets/js/misc.js"></script>
+</head>
+<style>
+  #loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 9999;
+  }
+
+  #loading-spinner {
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -30px 0 0 -30px;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  #loading-text {
+    position: absolute;
+    top: calc(50% + 60px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+</style>
+
+<body>
+  <div id="loading-overlay">
+    <div id="loading-spinner"></div>
+    <div id="loading-text">Loading...</div>
+  </div>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="row w-100 m-0">
+        <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+          <div class="card col-lg-4 mx-auto">
+            <div class="card-body px-5 py-5">
+              <h3 class="card-title text-left mb-3">Login</h3>
+              <div>
+                <label>Email *</label>
+                <input id="emailInput" type="text" class="form-control p_input">
+              </div>
+              <br>
+              <div>
+                <label>Password *</label>
+                <input id="passwordInput" type="password" class="form-control p_input">
+              </div>
+              <br>
+              <div class="text-center">
+                <button class="btn btn-primary btn-block enter-btn" id="confirmButton">Login</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var emailinput = document.getElementById('emailInput');
+    var passwordinput = document.getElementById('passwordInput');
+    var confirmButton = document.getElementById('confirmButton');
+    confirmButton.addEventListener('click', function () {
+      showLoading()
+      var email = emailinput.value;
+      var password = passwordinput.value;
+      var formData = new FormData();
+      formData.append('functionname', "login");
+      formData.append('email', email);
+      formData.append('password', password);
+      fetch('https://script.google.com/macros/s/AKfycbwb6OpcqdD1yJifVIZMeR5x2Ae1R5Ak-V04ASpXUNnkF1IjzbClCW8ZAdC0hoCE6QRp/exec', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => {
+          hideLoading()
+          if (response.ok) {
+            return response.text();
+          } else {
+            console.error('Login failed');
+            throw new Error('Login failed');
+          }
+        })
+        .then(data => {
+          hideLoading()
+          if (data.hasOwnProperty('error')) {
+            alert(data.error);
+            return;
+          }
+          data = JSON.parse(data);
+          localStorage.setItem('username', data.username);
+          localStorage.setItem('role', data.role);
+          if (data.role == "0") {
+            console.log('Login successful');
+            window.location.href = '../../index.html';
+          } else { alert("Đăng nhập thất bại, tài khoản của bạn không phải tài khoản admin"); }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    });
+    function showLoading() {
+      document.getElementById('loading-overlay').style.display = 'block';
+    }
+
+    function hideLoading() {
+      document.getElementById('loading-overlay').style.display = 'none';
+    }
+    window.onload = () => { localStorage.clear(); }
+  </script>
+
+</body>
+
+</html>

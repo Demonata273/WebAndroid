@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="./../assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="./../assets/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="./../assets/css/style.css">
+  <link rel="shortcut icon" href="./../assets/images/favicon.png" />
+</head>
+<style>
+  #loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 9999;
+  }
+
+  #loading-spinner {
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -30px 0 0 -30px;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  #loading-text {
+    position: absolute;
+    top: calc(50% + 60px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+</style>
+<body>
+  <div id="loading-overlay">
+    <div id="loading-spinner"></div>
+    <div id="loading-text">Loading...</div>
+  </div>
+  <div class="container-scroller">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar" style="top: 30px;">
+
+      <ul class="nav" style="padding-top: 30px;">
+        <li class="nav-item profile">
+          <div class="profile-desc">
+            <div class="profile-pic">
+              <div class="count-indicator">
+                <img class="img-xs rounded-circle " src="./../assets/images/faces/face15.jpg" alt="">
+                <span class="count bg-success"></span>
+              </div>
+              <div class="profile-name">
+                <h5 id="usernameDisplay" class="mb-0 font-weight-normal"></h5>
+                <span id="roleDisplay"></span>
+              </div>
+            </div>
+            <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+            <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list"
+              aria-labelledby="profile-dropdown">
+              <a href="./samples/login.html" class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-settings text-primary"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <p class="preview-subject ellipsis mb-1 text-small">LogOut</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item nav-category">
+          <span class="nav-link">Danh Mục</span>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="../index.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-speedometer"></i>
+            </span>
+            <span class="menu-title">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="./movie.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-video"></i>
+            </span>
+            <span class="menu-title">Movies</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="./account.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-account-plus"></i>
+            </span>
+            <span class="menu-title">Account</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="./employees.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-account-card-details"></i>
+            </span>
+            <span class="menu-title">Employees</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="./notication.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-account-card-details"></i>
+            </span>
+            <span class="menu-title">Notication</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_navbar.html -->
+      <nav class="navbar p-0 fixed-top d-flex flex-row">
+
+        <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch" style="height: 30px;">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <ul class="navbar-nav w-100">
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+            data-toggle="offcanvas">
+            <span class="mdi mdi-format-line-spacing"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel" style="padding-top: 30px;">
+        <div class="content-wrapper">
+          <div class="page-header">
+            <nav aria-label="breadcrumb">
+            </nav>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="card-title">Notication</h4>
+                    <button class="btn btn-primary btn-icon-text" onclick="openAddModal()"><i
+                        class="mdi mdi-account-plus"></i>Add</button>
+                  </div>
+                  </p>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th> Message_id </th>
+                          <th> Title </th>
+                          <th> Content </th>
+                          <th> Movie_Id </th>
+                          <th> Image_Url </th>
+                          <th> </th>
+                        </tr>
+                      </thead>
+                      <tbody id="notiDataBody">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal -->
+          <div class="modal fade" id="notiInfoModal" tabindex="-1" role="dialog" aria-labelledby="notiInfoModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="notiInfoModalLabel">Thông tin Notication</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body" id="notiInfoModalBody">
+                  <form id="notiInfoForm">
+                    <p><strong>noti ID: <span id="notiId" class="text-success"></span></strong></p>
+                    <div class="form-group">
+                      <label for="notiTitle">notiTitle:</label>
+                      <input type="text" class="form-control" id="notiTitle" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="notiContent">notiContent:</label>
+                      <input type="notiContent" class="form-control" id="notiContent" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="notiMovieId">notiMovieId:</label>
+                      <input type="notiMovieId" class="form-control" id="notiMovieId" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="notiImage">notiImage:</label>
+                      <input type="text" class="form-control" id="notiImage" value="">
+                    </div>
+                    <div class="form-group row notiTypeRadioGroup">
+                      <label class="col-sm-3 col-form-label">Role</label>
+                      <div class="col-sm-3">
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="role" value="0"> Global </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="role" value="1"> Favor </label>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" onclick="postDataWithOAuth()"
+                    id="saveButton">Thêm</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block"></span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Admin Movies App nhóm 12 </span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <script>
+    let notiData = null;
+    document.addEventListener('DOMContentLoaded', function () {
+      showLoading()
+      fetch('https://script.google.com/macros/s/AKfycbwb6OpcqdD1yJifVIZMeR5x2Ae1R5Ak-V04ASpXUNnkF1IjzbClCW8ZAdC0hoCE6QRp/exec')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          hideLoading()
+          // Lưu trữ dữ liệu người dùng vào biến toàn cục
+          notiData = data.noti;
+
+          // Clear previous data
+          const notiDataBody = document.getElementById('notiDataBody');
+          notiDataBody.innerHTML = '';
+
+          // Loop through the received data and create table rows
+          Object.values(notiData).forEach(noti => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                          <td>${noti[0]}</td>
+                          <td>${noti[1]}</td>
+                          <td>${noti[2]}</td>
+                          <td>${noti[3]}</td>
+                          <td>${noti[4]}</td>
+                          <td>
+                            <button class="btn btn-inverse-primary btn-icon" onclick="shownotiInfo('${noti[0]}')">
+                              <i class="mdi mdi-information"></i>
+                            </button>
+                            <button class="btn btn-inverse-danger btn-icon" onclick="deletenoti('${noti[0]}')">
+                              <i class="mdi mdi-close-octagon-outline"></i>
+                            </button>
+                          </td>
+                      `;
+            notiDataBody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    });
+
+    function deletenoti(notiId) {
+      showLoading()
+      var formData = new FormData();
+      formData.append('functionname', 'deleteNoti');
+      formData.append('notiId', notiId);
+      fetch(`https://script.google.com/macros/s/AKfycbwb6OpcqdD1yJifVIZMeR5x2Ae1R5Ak-V04ASpXUNnkF1IjzbClCW8ZAdC0hoCE6QRp/exec`, {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => {
+          hideLoading()
+          if (!response.ok) {
+            throw new Error('Failed to delete noti');
+          }
+          return response.json();
+        })
+        .then(data => {
+          hideLoading()
+          // Reload the table after deletion
+          location.reload();
+        })
+        .catch(error => {
+          hideLoading()
+          console.error('Error deleting noti:', error);
+        });
+    }
+
+    function shownotiInfo(notiId) {
+      document.getElementById('notiInfoModalLabel').textContent = 'Thông tin người dùng';
+      document.getElementById('saveButton').style.display = 'none';
+      // Lấy thông tin người dùng từ biến toàn cục notiData
+      const noti = notiData.find(u => u[0] === notiId);
+
+      // Điền thông tin người dùng vào các trường input
+      document.getElementById('notiId').textContent = noti[0];
+      document.getElementById('notiTitle').value = noti[1];
+      document.getElementById('notiContent').value = noti[2];
+      document.getElementById('notiMovieId').value = noti[3];
+      document.getElementById('notiImage').value = noti[4];
+      // Hiển thị modal
+      $('#notiInfoModal').modal('show');
+      $('.notiTypeRadioGroup').addClass('d-none');
+    }
+
+    function openAddModal() {
+      document.getElementById('notiInfoModalLabel').textContent = 'Thêm Noti Mới';
+      // Xóa trước các giá trị cũ trong modal
+      document.getElementById('notiId').textContent = '';
+      document.getElementById('notiTitle').value = '';
+      document.getElementById('notiContent').value = '';
+      document.getElementById('notiMovieId').value = '';
+      document.getElementById('notiImage').value = '';
+      // Hiển thị modal
+      $('#notiInfoModal').modal('show');
+      $('.notiTypeRadioGroup').removeClass('d-none');
+    }
+
+    function postDataWithOAuth() {
+      showLoading()
+      const notificationTitle = document.getElementById('notiTitle').value;
+      const notificationBody = document.getElementById('notiContent').value;
+      const movieId = document.getElementById('notiMovieId').value;
+      const largeImage = document.getElementById('notiImage').value;
+      const roleInput = document.querySelector('input[name="role"]:checked');
+      const role = roleInput.value;
+      let dataToSend;
+
+      if (role == "1") {
+        dataToSend = {
+          to: "/topics/notification" + movieId,
+          notification: {
+            title: notificationTitle,
+            body: notificationBody
+          },
+          data: {
+            movie_id: movieId,
+            large_image: largeImage
+          }
+        };
+      } else {
+        dataToSend = {
+          to: "/topics/notification",
+          notification: {
+            title: notificationTitle,
+            body: notificationBody
+          },
+          data: {
+            movie_id: "-1",
+            content: movieId,
+            large_image: largeImage
+          }
+        };
+      }
+      // Tạo header Authorization chứa token OAuth 2.0
+      const headers = new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer AAAALq6W20c:APA91bF3OkTk5wXCbbWe2EXZplHcvu-yU7dKnOUcLxwU6Tz8AhzL_L_9wPmq36H6PcYXY2tXjGnWz-tSYaBPBDoKv2mIIXb-n9-DYPscSTEel52igLfD2boAGexIDqTar0kY2x4Rdfl-'
+      });
+
+      // Sử dụng fetch API để gửi dữ liệu dưới dạng JSON với header Authorization
+      fetch('https://fcm.googleapis.com/fcm/send', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(dataToSend)
+      })
+        .then(response => {
+          hideLoading()
+          if (!response.ok) {
+            throw new Error('Failed to send data to server');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Data sent successfully:', data);
+          var formData = new FormData();
+          formData.append('functionname', 'notification');
+          formData.append('notiId', data.message_id);
+          formData.append('notiTitle', notificationTitle);
+          formData.append('notiContent', notificationBody);
+          formData.append('notiMovieId', movieId);
+          formData.append('notiImage', largeImage);
+          fetch('https://script.google.com/macros/s/AKfycbwb6OpcqdD1yJifVIZMeR5x2Ae1R5Ak-V04ASpXUNnkF1IjzbClCW8ZAdC0hoCE6QRp/exec',
+            {
+              method: 'POST',
+              body: formData
+            })
+            .then(response => {
+              hideLoading()
+              if (!response.ok) {
+                throw new Error('Failed to update movie');
+              }
+              return response.json();
+            })
+            .then(data => {
+              hideLoading()
+              location.reload();
+            })
+            .catch(error => {
+              hideLoading()
+              console.error('Error updating movie:', error);
+            });
+        })
+        .catch(error => {
+          hideLoading()
+          console.error('Error sending data to server:', error);
+        });
+    }
+  </script>
+  <script src="./../assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="./../assets/js/off-canvas.js"></script>
+  <script src="./../assets/js/hoverable-collapse.js"></script>
+  <script src="./../assets/js/misc.js"></script>
+  <script src="./../assets/js/settings.js"></script>
+  <script src="./../assets/js/todolist.js"></script>
+  <script src="./../assets/js/loading.js"></script>
+</body>
+
+</html>

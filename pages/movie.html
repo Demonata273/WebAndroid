@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="./../assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="./../assets/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="./../assets/css/style.css">
+  <link rel="shortcut icon" href="./../assets/images/favicon.png" />
+</head>
+<style>
+  #loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 9999;
+  }
+
+  #loading-spinner {
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -30px 0 0 -30px;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  #loading-text {
+    position: absolute;
+    top: calc(50% + 60px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+</style>
+<body>
+  <div id="loading-overlay">
+    <div id="loading-spinner"></div>
+    <div id="loading-text">Loading...</div>
+  </div>
+  <div class="container-scroller">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar" style="top: 30px;">
+      <ul class="nav" style="padding-top: 30px;">
+        <li class="nav-item profile">
+          <div class="profile-desc">
+            <div class="profile-pic">
+              <div class="count-indicator">
+                <img class="img-xs rounded-circle " src="./../assets/images/faces/face15.jpg" alt="">
+                <span class="count bg-success"></span>
+              </div>
+              <div class="profile-name">
+                <h5 id="usernameDisplay" class="mb-0 font-weight-normal"></h5>
+                <span id="roleDisplay"></span>
+              </div>
+            </div>
+            <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+            <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list"
+              aria-labelledby="profile-dropdown">
+              <a href="./samples/login.html" class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-settings text-primary"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <p class="preview-subject ellipsis mb-1 text-small">LogOut</p>
+                </div>
+              </a>
+
+            </div>
+          </div>
+        </li>
+        <li class="nav-item nav-category">
+          <span class="nav-link">Danh Mục</span>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="../index.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-speedometer"></i>
+            </span>
+            <span class="menu-title">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="./movie.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-video"></i>
+            </span>
+            <span class="menu-title">Movies</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="./account.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-account-plus"></i>
+            </span>
+            <span class="menu-title">Account</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="./employees.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-account-card-details"></i>
+            </span>
+            <span class="menu-title">Employees</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="./notication.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-account-card-details"></i>
+            </span>
+            <span class="menu-title">Notication</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_navbar.html -->
+      <nav class="navbar p-0 fixed-top d-flex flex-row">
+        <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch" style="height: 30px;">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <ul class="navbar-nav w-100">
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+            data-toggle="offcanvas">
+            <span class="mdi mdi-format-line-spacing"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel" style="padding-top: 30px;">
+        <div class="content-wrapper">
+          <div class="page-header">
+            <nav aria-label="breadcrumb">
+            </nav>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="card-title">Movie Infor</h4>
+                    <button class="btn btn-primary btn-icon-text" onclick="openAddModal()"><i
+                        class="mdi mdi-account-plus"></i>Add</button>
+                  </div>
+                  </p>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th> Movie_Id </th>
+                          <th> Movie_Poster </th>
+                          <th> Movie_Name </th>
+                          <th> Url_360 </th>
+                          <th> Url_720 </th>
+                          <th> </th>
+                        </tr>
+                      </thead>
+                      <tbody id="userDataBody">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal -->
+          <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="userInfoModalLabel" style="align-self: center;">Thông tin Movie</h5>
+                  <div class="form-check">
+                    <label class="form-check-label"></label>
+                    <div class="check-movie">
+                      <input type="text" class="check-movie" name="check" placeholder="Nhập id để check">
+                      <button class="btn btn-primary btn-icon" style="width: 32px; height: 32px;"
+                        onclick="checkMovie()">
+                        <i class="mdi mdi-sync"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-body" id="userInfoModalBody">
+                  <form id="userInfoForm">
+                    <p><strong>Movie ID: <span id="movieId" class="text-success"></span></strong></p>
+                    <div class="form-group">
+                      <label for="MoviePoster">Movie_Poster:</label>
+                      <input type="text" class="form-control" id="MoviePoster" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="MovieName">Movie_Name:</label>
+                      <input type="text" class="form-control" id="MovieName" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="movieUrl">Movie_Url_360:</label>
+                      <input type="text" class="form-control" id="movieUrl" value="">
+                      <input type="file" id="fileButton" />
+                      <progress id="progressBar" value="0" max="100"></progress>
+                      <div id="progressStatus"></div>
+                    </div>
+                    <div class="form-group">
+                      <label for="movieUrl720">Movie_Url_720:</label>
+                      <input type="text" class="form-control" id="movieUrl720" value="">
+                      <input type="file" id="fileButton720" />
+                      <progress id="progressBar720" value="0" max="100"></progress>
+                      <div id="progressStatus720"></div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="saveButton">Lưu</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block"></span>
+              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Admin Movies App nhóm 12 </span>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <script>
+      let movieData = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        showLoading()
+        fetch('https://script.google.com/macros/s/AKfycbwb6OpcqdD1yJifVIZMeR5x2Ae1R5Ak-V04ASpXUNnkF1IjzbClCW8ZAdC0hoCE6QRp/exec')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            hideLoading()
+            movieData = data.movies;
+            const userDataBody = document.getElementById('userDataBody');
+            userDataBody.innerHTML = '';
+            Object.values(movieData).forEach(movie => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                    <td>${movie[0]}</td>
+                    <td><img src="${movie[1]}" alt="${movie[2]}" style="width: 100px; height: 100px;"></td>
+                    <td>${movie[2]}</td>
+                    <td style="max-width:400px;overflow: hidden;"">${movie[3]}</td>
+                    <td style="max-width:400px;overflow: hidden;"">${movie[4]}</td>
+                    <td>
+                      <button class="btn btn-inverse-primary btn-icon" onclick="showMovieInfo('${movie[0]}')">
+                        <i class="mdi mdi-information"></i>
+                      </button>
+                      <button class="btn btn-inverse-danger btn-icon" onclick="deleteMovie('${movie[0]}')">
+                        <i class="mdi mdi-close-octagon-outline"></i>
+                      </button>
+                    </td>
+                `;
+              userDataBody.appendChild(row);
+            });
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      });
+
+      function deleteMovie(movieId) {
+        showLoading()
+        var formData = new FormData();
+        formData.append('functionname', 'deleteMovie');
+        formData.append('movieId', movieId);
+        fetch(`https://script.google.com/macros/s/AKfycbwb6OpcqdD1yJifVIZMeR5x2Ae1R5Ak-V04ASpXUNnkF1IjzbClCW8ZAdC0hoCE6QRp/exec`, {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => {
+            hideLoading()
+            if (!response.ok) {
+              throw new Error('Failed to delete user');
+            }
+            return response.json();
+          })
+          .then(data => {
+            hideLoading()
+            // Reload the table after deletion
+            location.reload();
+          })
+          .catch(error => {
+            hideLoading()
+            console.error('Error deleting user:', error);
+          });
+      }
+
+      function showMovieInfo(movieId) {
+        document.getElementById('userInfoModalLabel').textContent = 'Thông tin Movie';
+        document.getElementById('saveButton').textContent = 'Lưu';
+
+        const movie = movieData.find(m => m[0] == movieId);
+
+        document.getElementById('movieId').textContent = movie[0];
+        document.getElementById('MoviePoster').value = movie[1];
+        document.getElementById('MovieName').value = movie[2];
+        document.getElementById('movieUrl').value = movie[3];
+        document.getElementById('movieUrl720').value = movie[4];
+        $('#userInfoModal').modal('show');
+        $('.check-movie').addClass('d-none');
+      }
+
+      function openAddModal() {
+        document.getElementById('userInfoModalLabel').textContent = 'Thêm Moive mới';
+        document.getElementById('saveButton').textContent = 'Thêm';
+        document.getElementById('movieId').textContent = '';
+        document.getElementById('MoviePoster').value = '';
+        document.getElementById('MovieName').value = '';
+        document.getElementById('movieUrl').value = '';
+        document.getElementById('movieUrl720').value = '';
+        $('#userInfoModal').modal('show');
+        $('.check-movie').removeClass('d-none');
+      }
+
+      function checkMovie() {
+        showLoading()
+        const movieId = document.querySelector('.check-movie input').value;
+        const options = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NWRmZjc1NDE1ZThkODc2NmMxZWViZjEzYjEyNjlkNyIsInN1YiI6IjY1ZmIxYzQ3MDQ3MzNmMDE0YWU1ZDQ3YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.x0yoYG2Qeb_O8U_Ecd9Y9V5NtZXb3NnWNfwxhh5FojM'
+          }
+        };
+
+        fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, options)
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById('movieId').textContent = data.id;
+            document.getElementById('MoviePoster').value = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+            document.getElementById('MovieName').value = data.original_title;
+          })
+          .catch(err => console.error(err));
+        console.log(movieId)
+      }
+
+
+    </script>
+    <script src="./../assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="./../assets/js/off-canvas.js"></script>
+    <script src="./../assets/js/hoverable-collapse.js"></script>
+    <script src="./../assets/js/misc.js"></script>
+  <script src="./../assets/js/settings.js"></script>
+  <script src="./../assets/js/todolist.js"></script>
+  <script src="./../assets/js/loading.js"></script>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
+      import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyAALHW5h8R7zqo2aRspAxV3E1k2kQB0jWw",
+        authDomain: "movieapp-9a828.firebaseapp.com",
+        projectId: "movieapp-9a828",
+        storageBucket: "movieapp-9a828.appspot.com",
+        messagingSenderId: "200497617735",
+        appId: "1:200497617735:web:a0ac28234149defd9bca62",
+        measurementId: "G-DH74BMPD21"
+      };
+
+      // Initialize Firebase
+      const firebaseApp = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(firebaseApp);
+      const storage = getStorage(firebaseApp);
+      const uploadButton = document.getElementById('saveButton');
+      const fileInput = document.getElementById('fileButton');
+      const fileInput720 = document.getElementById('fileButton720');
+      const progressBar = document.getElementById('progressBar');
+      const progressStatus = document.getElementById('progressStatus');
+      const progressBar720 = document.getElementById('progressBar720');
+      const progressStatus720 = document.getElementById('progressStatus720');
+
+      uploadButton.addEventListener('click', function () {
+        const file360 = fileInput.files[0];
+        const file720 = fileInput720.files[0];
+        if (!file360 && !file720) {
+          showLoading()
+          console.log('No file selected. Update completed.');
+          const movieId = document.getElementById('movieId').textContent;
+          const moviePoster = document.getElementById('MoviePoster').value;
+          const movieName = document.getElementById('MovieName').value;
+          const movieUrl = document.getElementById('movieUrl').value;
+          const movieUrl720 = document.getElementById('movieUrl720').value;
+
+          const movieIndex = movieData.findIndex(u => u[0] === movieId);
+          if (movieIndex !== -1) {
+            movieData[movieIndex] = [movieId, moviePoster, movieName, movieUrl, movieUrl720];
+          }
+
+          var formData = new FormData();
+          formData.append('functionname', 'movies');
+          formData.append('movieId', movieId);
+          formData.append('moviePoster', moviePoster);
+          formData.append('movieName', movieName);
+          formData.append('movieUrl', movieUrl);
+          formData.append('movieUrl720', movieUrl720);
+          fetch('https://script.google.com/macros/s/AKfycbwb6OpcqdD1yJifVIZMeR5x2Ae1R5Ak-V04ASpXUNnkF1IjzbClCW8ZAdC0hoCE6QRp/exec', {
+            method: 'POST',
+            body: formData
+          })
+            .then(response => {
+              if (!response.ok) {
+                hideLoading()
+                throw new Error('Failed to update movie');
+              }
+              return response.json();
+            })
+            .then(data => {
+              hideLoading()
+              location.reload();
+            })
+            .catch(error => {
+              hideLoading()
+              console.error('Error updating movie:', error);
+            });
+          $('#userInfoModal').modal('hide');
+
+          return; // Exit the function if no file is selected
+        }
+
+        if (file360) {
+          showLoading()
+          const movieName = document.getElementById('MovieName').value + "_360";
+          const storageRef = ref(storage, 'movies/' + movieName);
+          const uploadTask = uploadBytesResumable(storageRef, file360);
+
+          uploadTask.on('state_changed',
+            (snapshot) => {
+              // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              progressBar.value = progress;
+              progressStatus.innerText = `Uploading... ${Math.round(progress)}%`;
+            },
+            (error) => {
+              hideLoading()
+              console.error('Error uploading file: ', error);
+            },
+            () => {
+              // Upload completed successfully, get download URL and log it
+              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                console.log('File available at', downloadURL);
+                progressStatus.innerText = 'Upload completed';
+                const movieId = document.getElementById('movieId').textContent;
+                const moviePoster = document.getElementById('MoviePoster').value;
+                const movieName = document.getElementById('MovieName').value;
+                const movieUrl = downloadURL || null;
+
+                const movieIndex = movieData.findIndex(u => u[0] === movieId);
+                if (movieIndex !== -1) {
+                  movieData[movieIndex] = [movieId, moviePoster, movieName, movieUrl];
+                }
+
+                var formData = new FormData();
+                formData.append('functionname', 'movies');
+                formData.append('movieId', movieId);
+                formData.append('moviePoster', moviePoster);
+                formData.append('movieName', movieName);
+                formData.append('movieUrl', movieUrl);
+                fetch('https://script.google.com/macros/s/AKfycbwb6OpcqdD1yJifVIZMeR5x2Ae1R5Ak-V04ASpXUNnkF1IjzbClCW8ZAdC0hoCE6QRp/exec',
+                  {
+                    method: 'POST',
+                    body: formData
+                  })
+                  .then(response => {
+                    hideLoading()
+                    if (!response.ok) {
+                      throw new Error('Failed to update movie');
+                    }
+                    return response.json();
+                  })
+                  .then(data => {
+                    hideLoading()
+                    location.reload();
+                  })
+                  .catch(error => {
+                    hideLoading()
+                    console.error('Error updating movie:', error);
+                  });
+              });
+            }
+          );
+        }
+        if (file720) {
+          showLoading()
+          const movieName = document.getElementById('MovieName').value + "_720";
+          const storageRef = ref(storage, 'movies/' + movieName);
+          const uploadTask720 = uploadBytesResumable(storageRef, file720);
+          uploadTask720.on('state_changed',
+            (snapshot) => {
+              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              progressBar720.value = progress;
+              progressStatus720.innerText = `Uploading... ${Math.round(progress)}%`;
+            },
+            (error) => {
+              hideLoading()
+              console.error('Error uploading file720: ', error);
+            },
+            () => {
+              getDownloadURL(uploadTask720.snapshot.ref).then((downloadURL720) => {
+                progressStatus720.innerText = 'Upload completed';
+                const movieId = document.getElementById('movieId').textContent;
+                const moviePoster = document.getElementById('MoviePoster').value;
+                const movieName = document.getElementById('MovieName').value;
+                const movieUrl720 = downloadURL720 || null;
+
+                const movieIndex = movieData.findIndex(u => u[0] === movieId);
+                if (movieIndex !== -1) {
+                  movieData[movieIndex] = [movieId, moviePoster, movieName, movieUrl720];
+                }
+
+                var formData = new FormData();
+                formData.append('functionname', 'movies');
+                formData.append('movieId', movieId);
+                formData.append('moviePoster', moviePoster);
+                formData.append('movieName', movieName);
+                formData.append('movieUrl720', movieUrl720);
+                fetch('https://script.google.com/macros/s/AKfycbwb6OpcqdD1yJifVIZMeR5x2Ae1R5Ak-V04ASpXUNnkF1IjzbClCW8ZAdC0hoCE6QRp/exec',
+                  {
+                    method: 'POST',
+                    body: formData
+                  })
+                  .then(response => {
+                    hideLoading()
+                    if (!response.ok) {
+                      throw new Error('Failed to update movie');
+                    }
+                    return response.json();
+                  })
+                  .then(data => {
+                    hideLoading()
+                    location.reload();
+                  })
+                  .catch(error => {
+                    hideLoading()
+                    console.error('Error updating movie:', error);
+                  });
+              });
+            }
+          );
+        }
+      });
+    </script>
+</body>
+
+</html>
